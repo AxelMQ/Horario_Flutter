@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_horario2/data/database/database_helper.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../screens/MateriaDetailScreen.dart';
 
 class HorarioListWidget extends StatelessWidget {
   final MateriaDetailScreen widget;
-   final int materiaId;
+  final int materiaId;
   final Function(bool) onUpdate;
 
   const HorarioListWidget({
     super.key,
     required this.widget,
-    required this.onUpdate, 
+    required this.onUpdate,
     required this.materiaId,
   });
 
@@ -37,21 +38,49 @@ class HorarioListWidget extends StatelessWidget {
               ),
             );
           } else {
-            // onUpdate(true);
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: horarios.map((horario) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Día: ${horario['dia']}'),
-                    Text('Hora Inicio: ${horario['horaInicio']}'),
-                    Text('Hora Final: ${horario['horaFinal']}'),
-                    Text('Aula: ${horario['aula']}'),
-                    const Divider(),
-                  ],
-                );
-              }).toList(),
+            return Table(
+              border: TableBorder.all(width: 1.0, color: Colors.black26),
+              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+              defaultColumnWidth: const FlexColumnWidth(1.0),
+              children: [
+                TableRow(
+                    decoration: BoxDecoration(color: Colors.blueGrey[100]),
+                    children: const [
+                      TableColumn(text: 'DIA'),
+                      TableColumn(text: 'HORA'),
+                      TableColumn(text: 'ACCIONES'),
+                    ]),
+                for (var horario in horarios)
+                  TableRow(children: [
+                    TableDataRow(horario: horario, text: 'dia'),
+                    TableCell(
+                        child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Text('${horario['horaInicio']} ', style: GoogleFonts.abel()),
+                          Text('${horario['horaFinal']}', style: GoogleFonts.abel()),
+                          const Divider(),
+                          Text('${horario['aula']}', style: GoogleFonts.abel(fontSize: 14))
+                        ],
+                      ),
+                    )),
+                    TableCell(
+                        child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        IconButtonWidget(
+                          icon: Icons.delete,
+                          color: Color.fromARGB(255, 219, 73, 63),
+                        ),
+                        IconButtonWidget(
+                          icon: Icons.edit,
+                          color: Color.fromARGB(255, 67, 145, 70),
+                        ),
+                      ],
+                    ))
+                  ])
+              ],
             );
           }
         } else {
@@ -59,5 +88,76 @@ class HorarioListWidget extends StatelessWidget {
         }
       },
     );
+  }
+}
+
+class IconButtonWidget extends StatelessWidget {
+  final IconData icon;
+  final Color color;
+
+  const IconButtonWidget({
+    super.key,
+    required this.icon,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+        onPressed: () {
+          print('Delete');
+        },
+        icon: Icon(
+          icon,
+          size: 25,
+          color: color,
+        ));
+  }
+}
+
+class TableDataRow extends StatelessWidget {
+  const TableDataRow({
+    super.key,
+    required this.horario,
+    required this.text,
+  });
+
+  final Map<String, dynamic> horario;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return TableCell(
+        child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Center(
+          child: Text(
+        '${horario[text]}',
+        style: GoogleFonts.abel(fontSize: 19, fontWeight: FontWeight.w400),
+      )),
+    ));
+  }
+}
+
+class TableColumn extends StatelessWidget {
+  final String text;
+
+  const TableColumn({
+    required this.text,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TableCell(
+        child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Center(
+        child: Text(
+          text,
+          style: GoogleFonts.acme(fontSize: 15),
+        ),
+      ),
+    ));
   }
 }
