@@ -3,11 +3,14 @@ import 'package:flutter_horario2/data/database/database_helper.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../screens/MateriaDetailScreen.dart';
+import 'HorarioListWidget/IconButtonWidget.dart';
+import 'HorarioListWidget/TableColumn.dart';
+import 'HorarioListWidget/TableDataRow.dart';
 
 class HorarioListWidget extends StatelessWidget {
   final MateriaDetailScreen widget;
   final int materiaId;
-  final Function(bool) onUpdate;
+  final Function onUpdate;
 
   const HorarioListWidget({
     super.key,
@@ -58,24 +61,33 @@ class HorarioListWidget extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
                         children: [
-                          Text('${horario['horaInicio']} ', style: GoogleFonts.abel()),
-                          Text('${horario['horaFinal']}', style: GoogleFonts.abel()),
+                          Text('${horario['horaInicio']} ',
+                              style: GoogleFonts.abel()),
+                          Text('${horario['horaFinal']}',
+                              style: GoogleFonts.abel()),
                           const Divider(),
-                          Text('${horario['aula']}', style: GoogleFonts.abel(fontSize: 14))
+                          Text('${horario['aula']}',
+                              style: GoogleFonts.abel(fontSize: 14))
                         ],
                       ),
                     )),
                     TableCell(
                         child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         IconButtonWidget(
                           icon: Icons.delete,
-                          color: Color.fromARGB(255, 219, 73, 63),
+                          color: const Color.fromARGB(255, 219, 73, 63),
+                          onPressed: () {
+                            dialogDeleteMethod(context, horario);
+                          },
                         ),
                         IconButtonWidget(
                           icon: Icons.edit,
-                          color: Color.fromARGB(255, 67, 145, 70),
+                          color: const Color.fromARGB(255, 67, 145, 70),
+                          onPressed: () {
+                            print('Edit click');
+                          },
                         ),
                       ],
                     ))
@@ -89,75 +101,59 @@ class HorarioListWidget extends StatelessWidget {
       },
     );
   }
-}
 
-class IconButtonWidget extends StatelessWidget {
-  final IconData icon;
-  final Color color;
-
-  const IconButtonWidget({
-    super.key,
-    required this.icon,
-    required this.color,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-        onPressed: () {
-          print('Delete');
-        },
-        icon: Icon(
-          icon,
-          size: 25,
-          color: color,
-        ));
-  }
-}
-
-class TableDataRow extends StatelessWidget {
-  const TableDataRow({
-    super.key,
-    required this.horario,
-    required this.text,
-  });
-
-  final Map<String, dynamic> horario;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return TableCell(
-        child: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Center(
-          child: Text(
-        '${horario[text]}',
-        style: GoogleFonts.abel(fontSize: 19, fontWeight: FontWeight.w400),
-      )),
-    ));
-  }
-}
-
-class TableColumn extends StatelessWidget {
-  final String text;
-
-  const TableColumn({
-    required this.text,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TableCell(
-        child: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Center(
-        child: Text(
-          text,
-          style: GoogleFonts.acme(fontSize: 15),
-        ),
-      ),
-    ));
+  Future<dynamic> dialogDeleteMethod(
+      BuildContext context, Map<String, dynamic> horario) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              'Eliminar',
+              style: GoogleFonts.anekTamil(
+                fontWeight: FontWeight.w600,
+                fontSize: 25,
+              ),
+            ),
+            content: Text(
+              'Esta seguro que desea Eliminar?',
+              style: GoogleFonts.anekTamil(
+                  fontWeight: FontWeight.w300, fontSize: 18),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  'Cancelar',
+                  style: GoogleFonts.acme(
+                      fontSize: 17,
+                      color: const Color.fromARGB(255, 23, 103, 168)),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  print('Si eliminar ${horario['id']}');
+                  DatabaseHelper.instance.deleteHorario(horario['id']);
+                  onUpdate(true);
+                  Navigator.of(context).pop();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Horario Eliminado Correctamente.'),
+                      backgroundColor: Color.fromARGB(255, 201, 69, 60),
+                    ),
+                  );
+                },
+                child: Text(
+                  'Eliminar',
+                  style: GoogleFonts.acme(
+                      fontSize: 17,
+                      color: const Color.fromARGB(255, 182, 50, 41)),
+                ),
+              ),
+            ],
+          );
+        });
   }
 }
