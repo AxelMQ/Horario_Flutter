@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_horario2/data/database/database_helper.dart';
 
-import 'ButonWidget.dart';
-import 'FormTextWidget.dart';
+import '../ButonWidget.dart';
+import '../FormTextWidget.dart';
 
 class FormRegisterMateria extends StatefulWidget {
   const FormRegisterMateria({

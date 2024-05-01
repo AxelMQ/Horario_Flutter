@@ -1,11 +1,13 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_horario2/data/database/database_helper.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../screens/MateriaDetailScreen.dart';
-import 'HorarioListWidget/IconButtonWidget.dart';
-import 'HorarioListWidget/TableColumn.dart';
-import 'HorarioListWidget/TableDataRow.dart';
+import '../../../screens/MateriaDetailScreen.dart';
+import '../../HorarioListWidget/IconButtonWidget.dart';
+import '../../HorarioListWidget/TableColumn.dart';
+import '../../HorarioListWidget/TableDataRow.dart';
 
 class HorarioListWidget extends StatelessWidget {
   final MateriaDetailScreen widget;
@@ -41,64 +43,66 @@ class HorarioListWidget extends StatelessWidget {
               ),
             );
           } else {
-            return Table(
-              border: TableBorder.all(width: 1.0, color: Colors.black26),
-              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-              defaultColumnWidth: const FlexColumnWidth(1.0),
-              children: [
-                TableRow(
-                    decoration: BoxDecoration(color: Colors.blueGrey[100]),
-                    children: const [
-                      TableColumn(text: 'DIA'),
-                      TableColumn(text: 'HORA'),
-                      TableColumn(text: 'ACCIONES'),
-                    ]),
-                for (var horario in horarios)
-                  TableRow(children: [
-                    TableDataRow(horario: horario, text: 'dia'),
-                    TableCell(
-                        child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Text('${horario['horaInicio']} ',
-                              style: GoogleFonts.abel()),
-                          Text('${horario['horaFinal']}',
-                              style: GoogleFonts.abel()),
-                          const Divider(),
-                          Text('${horario['aula']}',
-                              style: GoogleFonts.abel(fontSize: 14))
-                        ],
-                      ),
-                    )),
-                    TableCell(
-                        child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconButtonWidget(
-                          icon: Icons.delete,
-                          color: const Color.fromARGB(255, 219, 73, 63),
-                          onPressed: () {
-                            dialogDeleteMethod(context, horario);
-                          },
-                        ),
-                        IconButtonWidget(
-                          icon: Icons.edit,
-                          color: const Color.fromARGB(255, 67, 145, 70),
-                          onPressed: () {
-                            print('Edit click');
-                          },
-                        ),
-                      ],
-                    ))
-                  ])
-              ],
-            );
+            return table(horarios, context);
           }
         } else {
           return const SizedBox();
         }
       },
+    );
+  }
+
+  Table table(List<Map<String, dynamic>> horarios, BuildContext context) {
+    return Table(
+      border: TableBorder.all(width: 1.0, color: Colors.black26),
+      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+      defaultColumnWidth: const FlexColumnWidth(1.0),
+      children: [
+        TableRow(
+            decoration: BoxDecoration(color: Colors.blueGrey[100]),
+            children: const [
+              TableColumn(text: 'DIA'),
+              TableColumn(text: 'HORA'),
+              TableColumn(text: 'ACCIONES'),
+            ]),
+        for (var horario in horarios)
+          TableRow(children: [
+            TableDataRow(horario: horario, text: 'dia'),
+            TableCell(
+                child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Text('${horario['horaInicio']} ', style: GoogleFonts.abel()),
+                  Text('${horario['horaFinal']}', style: GoogleFonts.abel()),
+                  const Divider(),
+                  Text('${horario['aula']}',
+                      style: GoogleFonts.abel(fontSize: 14))
+                ],
+              ),
+            )),
+            TableCell(
+                child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButtonWidget(
+                  icon: Icons.delete,
+                  color: const Color.fromARGB(255, 219, 73, 63),
+                  onPressed: () {
+                    dialogDeleteMethod(context, horario);
+                  },
+                ),
+                IconButtonWidget(
+                  icon: Icons.edit,
+                  color: const Color.fromARGB(255, 67, 145, 70),
+                  onPressed: () {
+                    print('Edit click');
+                  },
+                ),
+              ],
+            ))
+          ])
+      ],
     );
   }
 
