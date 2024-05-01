@@ -42,7 +42,7 @@ class CardMateriaWidget extends StatelessWidget {
                       title: Text(
                         'Eliminar Materia',
                         style: GoogleFonts.anekTamil(
-                            fontWeight: FontWeight.w600, fontSize: 30),
+                            fontWeight: FontWeight.w500, fontSize: 30),
                       ),
                       content: Column(
                         mainAxisSize: MainAxisSize.min,

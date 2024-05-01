@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../data/models/materia.dart';
+import 'EditButtonWidget.dart';
 
 class DetailMateriaWidget extends StatelessWidget {
   const DetailMateriaWidget({
@@ -17,9 +18,20 @@ class DetailMateriaWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          materia.materia ?? '',
-          style: GoogleFonts.akshar(fontSize: 30),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Flexible(
+              child: Text(
+                materia.materia ?? '',
+                style: GoogleFonts.akshar(fontSize: 30),
+                overflow: TextOverflow.visible,
+              ),
+            ),
+            EditButtonWidget(
+              materia: materia,
+            )
+          ],
         ),
         const SizedBox(height: 10),
         Text(
