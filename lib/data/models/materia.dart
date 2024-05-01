@@ -6,16 +6,22 @@ class Materia {
   String? docente;
   String? semestre;
 
-  Materia({this.id, this.materia, this.sigla, this.grupo, this.docente, this.semestre});
+  Materia(
+      {this.id,
+      this.materia,
+      this.sigla,
+      this.grupo,
+      this.docente,
+      this.semestre});
 
-  Map<String, dynamic> toMap(){
+  Map<String, dynamic> toMap() {
     return {
-      'id' : id,
-      'materia' : materia,
-      'sigla' : sigla,
-      'grupo' : grupo,
-      'docente' : docente,
-      'semestre' : semestre,
+      'id': id,
+      'materia': materia,
+      'sigla': sigla,
+      'grupo': grupo,
+      'docente': docente,
+      'semestre': semestre,
     };
   }
 

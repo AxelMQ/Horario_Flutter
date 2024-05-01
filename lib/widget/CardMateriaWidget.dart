@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_horario2/data/database/database_helper.dart';
+import 'package:flutter_horario2/data/models/materia.dart';
 import 'package:flutter_horario2/screens/MateriaDetailScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
@@ -11,17 +12,18 @@ class CardMateriaWidget extends StatelessWidget {
     required this.onUpdate,
   });
 
-  final Map<String, dynamic> materia;
+  // final Map<String, dynamic> materia;
+  final Materia materia;
   final VoidCallback onUpdate;
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
-        materia['materia'],
+        materia.materia ?? '',
         style: GoogleFonts.akshar(fontSize: 20),
       ),
       subtitle: Text(
-        'Sigla: ${materia['sigla']} - Grupo: ${materia['grupo']} - Docente: ${materia['docente']} - SEM: ${materia['semestre']}',
+        'Sigla: ${materia.sigla ?? ''} - Grupo: ${materia.grupo ?? ''} - Docente: ${materia.docente ?? ''} - SEM: ${materia.semestre ?? ''}',
         style: GoogleFonts.archivo(fontWeight: FontWeight.w200, fontSize: 14),
       ),
       trailing: Row(
@@ -53,7 +55,7 @@ class CardMateriaWidget extends StatelessWidget {
                           ),
                           const SizedBox(height: 20),
                           Text(
-                            '${materia['materia']} - ${materia['sigla']} ${materia['grupo']}',
+                            '${materia.materia} - ${materia.sigla} ${materia.grupo}',
                             style: GoogleFonts.anekTelugu(fontSize: 15),
                             textAlign: TextAlign.center,
                           ),
@@ -74,7 +76,7 @@ class CardMateriaWidget extends StatelessWidget {
                         TextButton(
                           onPressed: () {
                             DatabaseHelper.instance
-                                .deleteMateria(materia['id']);
+                                .deleteMateria(materia.id!);
                             Navigator.of(context).pop();
                             messageAnimation(context);
                             onUpdate();

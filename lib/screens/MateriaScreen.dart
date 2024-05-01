@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_horario2/data/database/database_helper.dart';
+import 'package:flutter_horario2/data/models/materia.dart';
 
 import '../widget/CardMateriaWidget.dart';
 
@@ -22,7 +23,7 @@ class _MateriaScreenState extends State<MateriaScreen> {
       appBar: AppBar(
         title: const Text('Materias Registradas'),
       ),
-      body: FutureBuilder<List<Map<String, dynamic>>>(
+     body: FutureBuilder<List<Materia>>(
         future: DatabaseHelper.instance.getMaterias(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -32,7 +33,7 @@ class _MateriaScreenState extends State<MateriaScreen> {
               child: Text('Error: ${snapshot.error}'),
             );
           } else if (snapshot.hasData){
-            List<Map<String, dynamic>> materias = snapshot.data!;
+            List<Materia> materias = snapshot.data!;
             if (materias.isEmpty) {
               return const Center(
                 child: Text(

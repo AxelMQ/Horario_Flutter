@@ -2,11 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_horario2/data/database/database_helper.dart';
+import 'package:flutter_horario2/data/models/materia.dart';
 import 'package:flutter_horario2/widget/ButonWidget.dart';
 import 'package:flutter_horario2/widget/FormTextWidget.dart';
 
 class ModalHorarioAddWidget extends StatefulWidget {
-  final Map<String, dynamic> materia;
+  // final Map<String, dynamic> materia;
+  final Materia materia;
   final Function onUpdate;
 
 
@@ -37,7 +39,7 @@ class _ModalHorarioAddWidgetState extends State<ModalHorarioAddWidget> {
           // mainAxisSize: MainAxisSize.max,
           children: [
             Text(
-              '${widget.materia['materia']}',
+              '${widget.materia.materia}',
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
             ),
             const Divider(),
@@ -192,7 +194,7 @@ class _ModalHorarioAddWidgetState extends State<ModalHorarioAddWidget> {
           'horaInicio': selectedTimeA!.format(context),
           'horaFinal': selectedTimeB!.format(context),
           'aula': aulaController.text,
-          'materiaId': widget.materia['id']
+          'materiaId': widget.materia.id
         }).then((value) {
           widget.onUpdate(true);
           Navigator.of(context).pop();

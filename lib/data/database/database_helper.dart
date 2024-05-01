@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter_horario2/data/models/materia.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -48,9 +49,12 @@ class DatabaseHelper {
       ''');
   }
 
-  Future<List<Map<String, dynamic>>> getMaterias() async {
+  Future<List<Materia>> getMaterias() async {
     final db = await database;
-    return db.query('materias');
+    // return db.query('materias');
+    List<Map<String, dynamic>> results = await db.query('materias');
+    List<Materia> materias = results.map((map) => Materia.fromMap(map)).toList();
+    return materias;
   }
 
   Future<List<Map<String, dynamic>>> getHorarios() async {
