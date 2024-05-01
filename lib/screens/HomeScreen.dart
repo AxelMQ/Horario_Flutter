@@ -16,7 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   static const List<Widget> _widgetOptions = <Widget>[
     Text('Home Screen'),
     // Text('Otra pantalla'),
-    RegisterMateriaScreen(),
+    // RegisterMateriaScreen(),
     // Text('Otra pantalla'),
     MateriaScreen(),
   ];
@@ -42,10 +42,10 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Icon(Icons.home),
             label: 'Inicio',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Reg. Materia',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.business),
+          //   label: 'Reg. Materia',
+          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
             label: 'Materia',

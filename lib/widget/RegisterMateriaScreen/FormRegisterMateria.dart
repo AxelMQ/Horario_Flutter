@@ -5,8 +5,11 @@ import '../ButonWidget.dart';
 import '../FormTextWidget.dart';
 
 class FormRegisterMateria extends StatefulWidget {
+  final VoidCallback onUpdate;
+
   const FormRegisterMateria({
     super.key,
+    required this.onUpdate,
   });
 
   @override
@@ -51,7 +54,6 @@ class _FormRegisterMateriaState extends State<FormRegisterMateria> {
             text: 'Docente',
             controllerForm: docenteController,
             onValidator: (p0) => p0!.isEmpty ? 'Campo Requerido' : null,
-            
           ),
           const SizedBox(height: 10),
           FormTextWidget(
@@ -86,13 +88,14 @@ class _FormRegisterMateriaState extends State<FormRegisterMateria> {
                     grupoController.clear();
                     docenteController.clear();
                     semestreController.clear();
-
+                    widget.onUpdate();
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text('Materia Registrada'),
                         backgroundColor: Colors.green,
                       ),
                     );
+                  
                   }).catchError((error) {
                     print('Error al insertar materia: $error');
                   });

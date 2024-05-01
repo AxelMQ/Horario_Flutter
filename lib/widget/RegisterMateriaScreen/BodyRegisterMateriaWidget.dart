@@ -1,12 +1,14 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'AnimationRegisterWidget.dart';
 import 'FormRegisterMateria.dart';
 
 class BodyRegisterMateriaWidget extends StatelessWidget {
+  final VoidCallback onUpdate;
+
   const BodyRegisterMateriaWidget({
     super.key,
+    required this.onUpdate,
   });
 
   @override
@@ -34,7 +36,7 @@ class BodyRegisterMateriaWidget extends StatelessWidget {
               )),
             ),
             const SizedBox(height: 15),
-            const FormRegisterMateria(),
+            FormRegisterMateria(onUpdate: onUpdate,),
           ],
         ),
       ),

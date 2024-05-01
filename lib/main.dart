@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/home',
       routes: {
         '/home' :(context) => const HomeScreen(),
-        '/registerMateria' :(context) => const RegisterMateriaScreen(),
+        // '/registerMateria' :(context) => const RegisterMateriaScreen(),
         '/materia' :(context) => const MateriaScreen(),
       },
       theme: ThemeData(useMaterial3: true),

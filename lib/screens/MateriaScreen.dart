@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_horario2/data/database/database_helper.dart';
 import 'package:flutter_horario2/data/models/materia.dart';
+import '../widget/MateriaScreen/ButtonAgregar.dart';
 import '../widget/MateriaScreen/CardMateriaWidget.dart';
 
 class MateriaScreen extends StatefulWidget {
@@ -21,6 +22,10 @@ class _MateriaScreenState extends State<MateriaScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Materias Registradas'),
+        actions: [
+          ButtonAgregar(onUpdate: updateMateria,),
+          const SizedBox(width: 7)
+        ],
       ),
       body: bodyMateriaList(),
     );

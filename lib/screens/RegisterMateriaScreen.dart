@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import '../widget/RegisterMateriaScreen/BodyRegisterMateriaWidget.dart';
 
 class RegisterMateriaScreen extends StatelessWidget {
-  const RegisterMateriaScreen({super.key});
+  final VoidCallback onUpdate;
+
+  const RegisterMateriaScreen({super.key, required this.onUpdate});
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +15,7 @@ class RegisterMateriaScreen extends StatelessWidget {
         title: const Text('Registrar Materia'),
         elevation: 0.5,
       ),
-      body: const BodyRegisterMateriaWidget(),
+      body: BodyRegisterMateriaWidget(onUpdate: onUpdate),
     );
   }
 }
-
-
